@@ -1,17 +1,37 @@
 # go-deploy
 
-## how to install
-
-build
-
-```shell
-go build
+## 问题描述
+我的windows平台的一个部署脚本内容如下,fly deploy用于将应用部署到flyio平台
+```
+set JAVA_HOME=D:\java\jdk1.8.0_121
+mvn clean package -DskipTests -Pproduction
+fly deploy
 ```
 
-add deploy to PATH
+但是运行过程中遇到了一个非常奇怪的问题mvn clean package -DskipTests -Pproduction命令执行成功后fly deploy没有执行  
+原因是是mvn命令虽然执行成功了,但是并没有返回标准的执行成功的指令
+
+## 解决办法
+- 1.将命令放到文件中
+- 2.写一个程序,读取文件中的命令,一行一行执行
+- 3.处理一下环境变量和执行错误的情况
+
+## 如何使用
+已经开发完成,开源地址https://github.com/litongjava/go-deploy
+- 下载https://github.com/litongjava/go-deploy/releases/tag/v1.0.0
+- 将deploy.exe 添加到PATH目录,笔者是d:\bin
+- 添加deploy-win.txt笔者的内容如下
+- 执行deploy . 命令进行部署
+
+## 支持的平台
+目前仅仅支持windows平台,没有必要支持linux和macos,它们的shell script脚本已经足够好用
+
+## 其他
+对于其他需要命令流程的工作本工具依然适用
 
 ## how to use
 
+deploy-win.txt
 ```text
 set JAVA_HOME=D:\java\jdk1.8.0_121
 mvn clean package -DskipTests -Pproduction
