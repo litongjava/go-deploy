@@ -31,7 +31,7 @@ fly deploy
 
 ## how to use
 
-deploy-win.txt
+deploy-prod.txt
 ```text
 set JAVA_HOME=D:\java\jdk1.8.0_121
 mvn clean package -DskipTests -Pproduction
@@ -39,7 +39,7 @@ fly deploy
 ```
 
 ```shell
-deploy .
+deploy deploy-prod.txt
 ```
 
 output

@@ -17,18 +17,15 @@ func init() {
 
 func main() {
   if len(os.Args) < 2 {
-    fmt.Println("Usage: go run deploy.go <directory>")
+    fmt.Println("Usage: deploy file")
     return
   }
 
-  dir := os.Args[1]
+  filePath := os.Args[1]
   if runtime.GOOS != "windows" {
     log.Fatalln("not support current os")
     return
   }
-
-  fileName := "deploy-win.txt"
-  filePath := dir + "\\" + fileName
 
   file, err := os.Open(filePath)
   if err != nil {
@@ -50,7 +47,7 @@ func main() {
       continue // 跳过执行此命令
     }
 
-    executeCommand(dir, line, envVariables)
+    executeCommand(line, envVariables)
   }
 
   if err := scanner.Err(); err != nil {
@@ -59,11 +56,10 @@ func main() {
 }
 
 // executeCommand 在指定目录下执行一条命令，并应用所有以前设置的环境变量
-func executeCommand(dir string, commandStr string, envVariables []string) {
-  log.Println("Executing in", dir, ":", commandStr)
+func executeCommand(commandStr string, envVariables []string) {
+  log.Println("Executing in", ":", commandStr)
 
   cmd := exec.Command("cmd", "/C", commandStr)
-  cmd.Dir = dir // 设置命令的工作目录为用户指定的目录
 
   // 添加之前设置的环境变量到命令中
   currEnv := os.Environ()
